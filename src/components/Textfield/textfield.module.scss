@@ -1,0 +1,13 @@
+.textfield {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    margin-bottom: 6px;
+  }
+
+  &__input {
+    padding: 0 8px;
+    height: 32px;
+  }
+}

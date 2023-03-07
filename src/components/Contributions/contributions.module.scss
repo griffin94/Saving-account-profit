@@ -1,0 +1,15 @@
+@use '../constans' as c;
+
+.contributions {
+  border: c.$border;
+  border-radius: c.$rounding;
+  padding: c.$spacing;
+
+  & &__heading {
+    // margin: 0 0 c.$spacing;
+  }
+
+  & &__paragraph {
+    // margin: c.$spacing 0;
+  }
+}

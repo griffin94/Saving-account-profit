@@ -1,0 +1,6 @@
+@use '../constans' as c;
+
+.item {
+  display: flex;
+  gap: c.$spacing;
+}

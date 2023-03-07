@@ -1,0 +1,16 @@
+@use '../constans' as c;
+
+.settings {
+  border: c.$border;
+  border-radius: c.$rounding;
+  padding: c.$spacing;
+
+  & &__heading {
+    margin: 0 0 c.$spacing;
+  }
+
+  & &__form {
+    display: flex;
+    gap: c.$spacing;
+  }
+}

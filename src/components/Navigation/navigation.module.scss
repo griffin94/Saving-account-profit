@@ -1,0 +1,10 @@
+@use '../constans' as c;
+
+.navigation {
+  display: flex;
+  gap: c.$spacing;
+
+  & &__button {
+    flex: 1;
+  }
+}

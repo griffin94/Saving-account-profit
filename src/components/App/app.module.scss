@@ -1,0 +1,9 @@
+@use '../constans' as c;
+
+.app {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: c.$spacing;
+}
