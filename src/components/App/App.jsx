@@ -7,17 +7,27 @@ import {
 } from '../../constans';
 import cs from './app.module.scss';
 import cx from 'classnames';
+import { generateID } from '../../helpers';
 
 const App = () => {
   const [settings, setSettings] = useState(SETTINGS_INITIAL_STATE);
-  const [investments, setInvestments] = useState(INVESTMENTS_NEW_CONTRIBUTION);
+  const [investments, setInvestments] = useState(INVESTMENTS_INITIAL_STATE);
 
-  const calculate = () => {};
+  const calculateProfit = () => {};
+
+  const addContribution = () =>
+    setInvestments((prevState) => [
+      ...prevState,
+      {
+        ...INVESTMENTS_NEW_CONTRIBUTION,
+        id: generateID(prevState),
+      },
+    ]);
 
   const changeSettings = (e) =>
     setSettings((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: parseFloat(e.target.value),
     }));
 
   return (
@@ -31,7 +41,11 @@ const App = () => {
         investments={investments}
         className={cx(cs.app__contribution)}
       />
-      <Navigation className={cx(cs.app__navigation)} />
+      <Navigation
+        className={cx(cs.app__navigation)}
+        addContribution={addContribution}
+        calculateProfit={calculateProfit}
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import cs from './settings.module.scss';
 import cx from 'classnames';
 import { SETTINGS_LABELS } from '../../constans';
-import { Textfield } from '../';
+import { Textfield } from '..';
 
 const Settings = ({ settings = [], changeSettings }) => {
   return (
