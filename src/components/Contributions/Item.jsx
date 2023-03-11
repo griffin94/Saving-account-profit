@@ -12,7 +12,7 @@ const Item = ({ changeContribution, removeContribution, id, ...props }) => (
         name={key}
         value={props[key]}
         label={label}
-        onChange={() => changeContribution(id)}
+        onChange={(e) => changeContribution(e, id)}
       />
     ))}
     <button

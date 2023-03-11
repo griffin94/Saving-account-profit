@@ -24,7 +24,18 @@ const App = () => {
       },
     ]);
 
-  const changeContribution = (contributionId) => {};
+  const changeContribution = (e, contributionToChangeId) =>
+    setContributions((prevContributions) =>
+      prevContributions.map((contribution) =>
+        contribution.id === contributionToChangeId
+          ? {
+              ...contribution,
+              [e.target.name]: e.target.value,
+            }
+          : contribution,
+      ),
+    );
+
   const removeContribution = (contributionToRemoveId) => {
     setContributions((prevContributions) =>
       prevContributions.filter(
