@@ -1,13 +1,6 @@
 const generateID = (source = []) => {
-  console.log(source);
-  const ids = source.map((item) => item.id);
-  console.log(ids);
-  return (
-    Math.max(
-      source.reduce((acc, item) => [...acc, item.id]),
-      [],
-    ) + 1
-  );
+  const ids = source.reduce((result, item) => [...result, item.id], []);
+  return ids.length ? Math.max(...ids) + 1 : 0;
 };
 
 export default generateID;
