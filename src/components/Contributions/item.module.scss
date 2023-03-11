@@ -2,5 +2,15 @@
 
 .item {
   display: flex;
+  align-items: flex-end;
   gap: c.$spacing;
+
+  &__button {
+    height: 32px;
+    aspect-ratio: 1 / 1;
+    background-color: tomato;
+    border: 1px solid tomato;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 }

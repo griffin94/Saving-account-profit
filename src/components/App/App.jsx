@@ -11,18 +11,27 @@ import { generateID } from '../../helpers';
 
 const App = () => {
   const [settings, setSettings] = useState(SETTINGS_INITIAL_STATE);
-  const [investments, setInvestments] = useState(INVESTMENTS_INITIAL_STATE);
+  const [contributions, setContributions] = useState(INVESTMENTS_INITIAL_STATE);
 
   const calculateProfit = () => {};
 
   const addContribution = () =>
-    setInvestments((prevState) => [
+    setContributions((prevState) => [
       ...prevState,
       {
         ...INVESTMENTS_NEW_CONTRIBUTION,
         id: generateID(prevState),
       },
     ]);
+
+  const changeContribution = (contributionId) => {};
+  const removeContribution = (contributionToRemoveId) => {
+    setContributions((prevContributions) =>
+      prevContributions.filter(
+        (prevContribution) => prevContribution.id !== contributionToRemoveId,
+      ),
+    );
+  };
 
   const changeSettings = (e) =>
     setSettings((prevState) => ({
@@ -38,7 +47,9 @@ const App = () => {
         className={cx(cs.app__settings)}
       />
       <Contributions
-        investments={investments}
+        changeContribution={changeContribution}
+        removeContribution={removeContribution}
+        contributions={contributions}
         className={cx(cs.app__contribution)}
       />
       <Navigation

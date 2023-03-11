@@ -11,6 +11,7 @@ const Settings = ({ settings = [], changeSettings }) => {
       <form className={cx(cs.settings__form)}>
         {Object.entries(settings).map(([key, value]) => (
           <Textfield
+            key={key}
             name={key}
             value={value}
             label={SETTINGS_LABELS[key]}
