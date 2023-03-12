@@ -3,4 +3,4 @@ export {
   INVESTMENTS_NEW_CONTRIBUTION,
   INVESTMENTS_LABELS,
 } from './investments';
-export { SETTINGS_INITIAL_STATE, SETTINGS_LABELS } from './settings';
+export { SETTINGS_INITIAL_STATE, SETTINGS_LABELS, DAYS_IN_YEAR } from './settings';

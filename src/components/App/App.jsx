@@ -4,6 +4,7 @@ import {
   INVESTMENTS_INITIAL_STATE,
   INVESTMENTS_NEW_CONTRIBUTION,
   SETTINGS_INITIAL_STATE,
+  DAYS_IN_YEAR,
 } from '../../constans';
 import cs from './app.module.scss';
 import cx from 'classnames';
@@ -13,7 +14,32 @@ const App = () => {
   const [settings, setSettings] = useState(SETTINGS_INITIAL_STATE);
   const [contributions, setContributions] = useState(INVESTMENTS_INITIAL_STATE);
 
-  const calculateProfit = () => {};
+  const calculateProfit = () => {
+    const { accountInterest, tax } = settings;
+    const netProfit = 1 - tax;
+
+    const result = contributions.reduce(
+      (result, { contribution, id, participation, workingTime }) => {
+        const workingTimeRelativeToYear = workingTime / DAYS_IN_YEAR;
+        const totalProfit = parseFloat(
+          (contribution * accountInterest * workingTimeRelativeToYear * netProfit).toFixed(2),
+        );
+        const beneficiaryProfit = parseFloat((totalProfit * participation).toFixed(2));
+        const secondBeneficiaryProfit = parseFloat((totalProfit - beneficiaryProfit).toFixed(2));
+        return [
+          ...result,
+          {
+            id,
+            totalProfit,
+            beneficiaryProfit,
+            secondBeneficiaryProfit,
+          },
+        ];
+      },
+      [],
+    );
+    console.log(result);
+  };
 
   const addContribution = () =>
     setContributions((prevState) => [
@@ -47,7 +73,7 @@ const App = () => {
   const changeSettings = (e) =>
     setSettings((prevState) => ({
       ...prevState,
-      [e.target.name]: parseFloat(e.target.value),
+      [e.target.name]: e.target.value,
     }));
 
   return (
