@@ -7,4 +7,26 @@
   display: flex;
   flex-direction: column;
   gap: c.$spacing;
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: c.$spacing;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-end;
+    gap: c.$spacing;
+  }
+
+  &__textfield {
+    flex: 1;
+  }
+
+  &__button {
+    height: 32px;
+    aspect-ratio: 1 / 1;
+  }
 }

@@ -13,4 +13,8 @@
     display: flex;
     gap: c.$spacing;
   }
+
+  & &__textfield {
+    flex: 1;
+  }
 }

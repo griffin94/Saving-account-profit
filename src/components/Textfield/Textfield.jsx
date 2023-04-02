@@ -2,10 +2,17 @@ import React, { useId } from 'react';
 import cx from 'classnames';
 import cs from './textfield.module.scss';
 
-const Textfield = ({ label, value, onChange, name, type = 'text' }) => {
+const Textfield = ({
+  className,
+  label,
+  name,
+  onChange,
+  type = 'text',
+  value,
+}) => {
   const id = useId();
   return (
-    <div className={cx(cs.textfield)}>
+    <div className={cx(cs.textfield, className)}>
       <label
         htmlFor={id}
         className={cx(cs.textfield__label)}

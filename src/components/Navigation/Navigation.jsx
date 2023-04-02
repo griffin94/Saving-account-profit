@@ -2,18 +2,18 @@ import React from 'react';
 import cs from './navigation.module.scss';
 import cx from 'classnames';
 
-const Navigation = ({ addContribution, calculateProfit }) => {
+const Navigation = ({ actions = {}, className }) => {
   return (
-    <nav className={cx(cs.navigation)}>
+    <nav className={cx(cs.navigation, className)}>
       <button
         className={cx(cs.navigation__button)}
-        onClick={addContribution}
+        onClick={actions.addContribution}
       >
         Dodaj Wkład
       </button>
       <button
         className={cx(cs.navigation__button)}
-        onClick={calculateProfit}
+        onClick={actions.calculateProfit}
       >
         Oblicz zysk
       </button>

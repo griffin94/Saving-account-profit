@@ -1,98 +1,75 @@
-import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import { v4 as uuidv4 } from 'uuid';
 import { Contributions, Settings, Navigation } from '..';
-import {
-  INVESTMENTS_INITIAL_STATE,
-  INVESTMENTS_NEW_CONTRIBUTION,
-  SETTINGS_INITIAL_STATE,
-  DAYS_IN_YEAR,
-} from '../../constans';
+import { CONTRIBUTION, FIELDS, SETTINGS } from '../../constans';
 import cs from './app.module.scss';
 import cx from 'classnames';
-import { generateID } from '../../helpers';
+import { getProfit } from './../../utils';
 
 const App = () => {
-  const [settings, setSettings] = useState(SETTINGS_INITIAL_STATE);
-  const [contributions, setContributions] = useState(INVESTMENTS_INITIAL_STATE);
+  const formik = useFormik({
+    initialValues: {
+      [FIELDS.CONTRIBUTIONS]: [
+        {
+          ...CONTRIBUTION,
+          id: uuidv4(),
+        },
+      ],
+      [FIELDS.SETTINGS]: SETTINGS,
+    },
+  });
 
-  const calculateProfit = () => {
-    const { accountInterest, tax } = settings;
-    const netProfit = 1 - tax;
-
-    const result = contributions.reduce(
-      (result, { contribution, id, participation, workingTime }) => {
-        const workingTimeRelativeToYear = workingTime / DAYS_IN_YEAR;
-        const totalProfit = parseFloat(
-          (contribution * accountInterest * workingTimeRelativeToYear * netProfit).toFixed(2),
-        );
-        const beneficiaryProfit = parseFloat((totalProfit * participation).toFixed(2));
-        const secondBeneficiaryProfit = parseFloat((totalProfit - beneficiaryProfit).toFixed(2));
-        return [
-          ...result,
-          {
-            id,
-            totalProfit,
-            beneficiaryProfit,
-            secondBeneficiaryProfit,
-          },
-        ];
-      },
-      [],
-    );
-    console.log(result);
-  };
-
-  const addContribution = () =>
-    setContributions((prevState) => [
-      ...prevState,
-      {
-        ...INVESTMENTS_NEW_CONTRIBUTION,
-        id: generateID(prevState),
-      },
-    ]);
-
-  const changeContribution = (e, contributionToChangeId) =>
-    setContributions((prevContributions) =>
-      prevContributions.map((contribution) =>
-        contribution.id === contributionToChangeId
-          ? {
-              ...contribution,
-              [e.target.name]: e.target.value,
-            }
-          : contribution,
-      ),
-    );
-
-  const removeContribution = (contributionToRemoveId) => {
-    setContributions((prevContributions) =>
-      prevContributions.filter(
-        (prevContribution) => prevContribution.id !== contributionToRemoveId,
-      ),
-    );
-  };
-
-  const changeSettings = (e) =>
-    setSettings((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
+  const addContribution = () => {
+    formik.setValues((values) => ({
+      ...values,
+      [FIELDS.CONTRIBUTIONS]: [
+        ...values[FIELDS.CONTRIBUTIONS],
+        {
+          ...CONTRIBUTION,
+          id: uuidv4(),
+        },
+      ],
     }));
+  };
+
+  const removeContribution = (id) => {
+    formik.setValues((values) => ({
+      ...values,
+      [FIELDS.CONTRIBUTIONS]: [
+        ...values[FIELDS.CONTRIBUTIONS].filter(
+          (contribution) => contribution.id !== id
+        ),
+      ],
+    }));
+  };
 
   return (
     <div className={cx(cs.app)}>
       <Settings
-        settings={settings}
-        changeSettings={changeSettings}
         className={cx(cs.app__settings)}
+        settings={formik.values[FIELDS.SETTINGS]}
+        actions={{
+          handleChange: formik.handleChange,
+        }}
       />
       <Contributions
-        changeContribution={changeContribution}
-        removeContribution={removeContribution}
-        contributions={contributions}
+        actions={{
+          handleChange: formik.handleChange,
+          removeContribution,
+        }}
+        contributions={formik.values[FIELDS.CONTRIBUTIONS]}
         className={cx(cs.app__contribution)}
       />
       <Navigation
+        actions={{
+          addContribution,
+          calculateProfit: () =>
+            getProfit({
+              contributions: formik.values.contributions,
+              settings: formik.values.settings,
+            }),
+        }}
         className={cx(cs.app__navigation)}
-        addContribution={addContribution}
-        calculateProfit={calculateProfit}
       />
     </div>
   );

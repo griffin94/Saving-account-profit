@@ -1,14 +1,16 @@
+@use '../constans' as c;
+
 .textfield {
   display: flex;
   flex-direction: column;
   min-width: 0;
 
   &__label {
-    margin-bottom: 6px;
+    margin-bottom: calc(c.$spacing / 2);
   }
 
   &__input {
-    padding: 0 8px;
+    padding: 0 c.$spacing;
     height: 32px;
   }
 }
