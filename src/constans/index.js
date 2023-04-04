@@ -10,8 +10,8 @@ export const CONTRIBUTION = {
 };
 
 export const SETTINGS = {
-  accountInterest: '',
-  tax: '',
+  accountInterest: 0.08,
+  tax: 0.19,
 };
 
 export const SETTINGS_LABELS = {
@@ -23,4 +23,11 @@ export const CONTRIBUTIONS_LABELS = {
   contribution: 'Wkład',
   receiptDate: 'Data wpłaty',
   capitalizationDate: 'Data kapitalizacji',
+};
+
+export const ERRORS = {
+  REQUIRED: 'Uzupełnij pole',
+  MAX: 'Wartość nie może być większa niż ${max}',
+  MIN: 'Wartość nie może być mniejsza niż ${min}',
+  MIN_DATE: 'Data nie może być wcześniejsza niż ${min}',
 };

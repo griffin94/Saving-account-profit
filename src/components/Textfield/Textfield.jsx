@@ -4,8 +4,10 @@ import cs from './textfield.module.scss';
 
 const Textfield = ({
   className,
+  error,
   label,
   name,
+  onBlur,
   onChange,
   type = 'text',
   value,
@@ -24,9 +26,11 @@ const Textfield = ({
         id={id}
         name={name}
         value={value}
+        onBlur={onBlur}
         onChange={onChange}
         className={cx(cs.textfield__input)}
       />
+      {error ? <span className={cx(cs.textfield__error)}>{error}</span> : null}
     </div>
   );
 };

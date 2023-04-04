@@ -1,77 +1,42 @@
-import { useFormik } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
-import { Contributions, Settings, Navigation } from '..';
-import { CONTRIBUTION, FIELDS, SETTINGS } from '../../constans';
 import cs from './app.module.scss';
 import cx from 'classnames';
-import { getProfit } from './../../utils';
+import { Contributions, Settings, Navigation } from '..';
+import { FIELDS } from '../../constans';
+import { useContributionForm } from '../../hooks';
 
 const App = () => {
-  const formik = useFormik({
-    initialValues: {
-      [FIELDS.CONTRIBUTIONS]: [
-        {
-          ...CONTRIBUTION,
-          id: uuidv4(),
-        },
-      ],
-      [FIELDS.SETTINGS]: SETTINGS,
-    },
-  });
-
-  const addContribution = () => {
-    formik.setValues((values) => ({
-      ...values,
-      [FIELDS.CONTRIBUTIONS]: [
-        ...values[FIELDS.CONTRIBUTIONS],
-        {
-          ...CONTRIBUTION,
-          id: uuidv4(),
-        },
-      ],
-    }));
-  };
-
-  const removeContribution = (id) => {
-    formik.setValues((values) => ({
-      ...values,
-      [FIELDS.CONTRIBUTIONS]: [
-        ...values[FIELDS.CONTRIBUTIONS].filter(
-          (contribution) => contribution.id !== id
-        ),
-      ],
-    }));
-  };
-
+  const { formik, addContribution, removeContribution } = useContributionForm();
   return (
-    <div className={cx(cs.app)}>
+    <form className={cx(cs.app)}>
       <Settings
-        className={cx(cs.app__settings)}
-        settings={formik.values[FIELDS.SETTINGS]}
         actions={{
+          handleBlur: formik.handleBlur,
           handleChange: formik.handleChange,
         }}
+        className={cx(cs.app__settings)}
+        errors={formik.errors?.[FIELDS.SETTINGS]}
+        touched={formik.touched?.[FIELDS.SETTINGS]}
+        settings={formik.values[FIELDS.SETTINGS]}
       />
       <Contributions
         actions={{
+          handleBlur: formik.handleBlur,
           handleChange: formik.handleChange,
           removeContribution,
         }}
-        contributions={formik.values[FIELDS.CONTRIBUTIONS]}
         className={cx(cs.app__contribution)}
+        contributions={formik.values[FIELDS.CONTRIBUTIONS]}
+        errors={formik.errors?.[FIELDS.CONTRIBUTIONS]}
+        touched={formik.touched?.[FIELDS.CONTRIBUTIONS]}
       />
       <Navigation
         actions={{
           addContribution,
-          calculateProfit: () =>
-            getProfit({
-              contributions: formik.values.contributions,
-              settings: formik.values.settings,
-            }),
+          calculateProfit: formik.handleSubmit,
         }}
         className={cx(cs.app__navigation)}
       />
-    </div>
+    </form>
   );
 };
 
