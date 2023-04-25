@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 import { CONTRIBUTION, ERRORS, FIELDS, SETTINGS } from '../constans';
 import { getProfit } from '../utils';
+import { useState, useMemo } from 'react';
 
 const schema = Yup.object().shape({
   [FIELDS.SETTINGS]: Yup.object().shape({
@@ -33,6 +34,7 @@ const schema = Yup.object().shape({
 });
 
 const useContributionForm = () => {
+  const [profits, setProfits] = useState({ profits: [], totalProfit: 0 });
   const formik = useFormik({
     initialValues: {
       [FIELDS.CONTRIBUTIONS]: [
@@ -45,10 +47,12 @@ const useContributionForm = () => {
     },
     validationSchema: schema,
     onSubmit: (values) =>
-      getProfit({
-        contributions: values.contributions,
-        settings: values.settings,
-      }),
+      setProfits(
+        getProfit({
+          contributions: values.contributions,
+          settings: values.settings,
+        })
+      ),
   });
 
   const addContribution = () => {
@@ -77,6 +81,7 @@ const useContributionForm = () => {
 
   return {
     formik,
+    profits,
     addContribution,
     removeContribution,
   };

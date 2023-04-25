@@ -1,32 +1,7 @@
-@use '../constans' as c;
-
-.contributions {
-  border: c.$border;
-  border-radius: c.$rounding;
-  padding: c.$spacing;
-  display: flex;
-  flex-direction: column;
-  gap: c.$spacing;
-
-  &__list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: c.$spacing;
-  }
-
-  &__item {
-    display: flex;
-    align-items: flex-end;
-    gap: c.$spacing;
-  }
-
-  &__textfield {
-    flex: 1;
-  }
-
-  &__button {
-    height: 32px;
-    aspect-ratio: 1 / 1;
+.button {
+  @media (min-width: 768px) {
+    & {
+      margin-top: 32px;
+    }
   }
 }

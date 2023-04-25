@@ -31,7 +31,7 @@ const getProfit = ({ contributions, settings }) => {
   );
 
   const totalProfit = profits.reduce(
-    (result, { profit }) => result + profit,
+    (result, { profit }) => round(result + profit, 2),
     0
   );
 

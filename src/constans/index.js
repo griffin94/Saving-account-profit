@@ -31,3 +31,12 @@ export const ERRORS = {
   MIN: 'Wartość nie może być mniejsza niż ${min}',
   MIN_DATE: 'Data nie może być wcześniejsza niż ${min}',
 };
+
+export const PROFIT_TABLE = {
+  HEADERS: {
+    contribution: 'Wład',
+    contributionWorkingDays: 'Czas pracy',
+    profit: 'Zysk',
+  },
+  SUMMARY: 'Zysk całkowity',
+};

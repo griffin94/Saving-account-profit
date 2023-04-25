@@ -1,25 +1,34 @@
-import cs from './navigation.module.scss';
+import Button from 'react-bootstrap/Button';
 import cx from 'classnames';
 
-const Navigation = ({ actions = {}, className }) => {
-  return (
-    <nav className={cx(cs.navigation, className)}>
-      <button
-        type='button'
-        className={cx(cs.navigation__button)}
-        onClick={actions.addContribution}
-      >
-        Dodaj Wkład
-      </button>
-      <button
-        type='button'
-        className={cx(cs.navigation__button)}
-        onClick={actions.calculateProfit}
-      >
-        Oblicz zysk
-      </button>
-    </nav>
-  );
-};
+const Navigation = ({ actions = {} }) => (
+  <div
+    className={cx(
+      'd-flex',
+      'flex-column',
+      'flex-md-row',
+      'mt-5',
+      'mt-md-3',
+      'gap-2'
+    )}
+  >
+    <Button
+      type='button'
+      className={cx('flex-grow-1')}
+      onClick={actions.addContribution}
+      variant='primary'
+    >
+      Dodaj Wkład
+    </Button>
+    <Button
+      type='button'
+      className={cx('flex-grow-1')}
+      onClick={actions.calculateProfit}
+      variant='primary'
+    >
+      Oblicz zysk
+    </Button>
+  </div>
+);
 
 export default Navigation;
